@@ -42,7 +42,7 @@ fileBin.find('README.md').then(file => {
 
 The resuling file has two properties: `id` and `content`. `id` is the file name. `content` is the content of the file.
 
-### Finding All of the File
+### Finding All of the Files
 
 `#all` will find all of the files in the base directory. If you provided an array of valid extensions, then it will filter by those extenions. The resulting files are fulling instantiated objects—just like `#find` above.
 
