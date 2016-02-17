@@ -13,6 +13,8 @@ We're doing a project at the [Turing School for Software and Design][turing] bui
 - Ember really likes promises and Node really likes callbacks. It would be nice to have an abstraction to bridge that gap.
 - We don't want to open weird Vim temp files and stuff like that. It would be cool if we could pass in an array of file extensions that we'd like to return.
 
+[turing]: http://turing.io
+
 ## How does it work?
 
 ### Instantiating an Instance
