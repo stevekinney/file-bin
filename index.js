@@ -42,7 +42,7 @@ FileBin.prototype.list = function () {
 FileBin.prototype.all = function () {
   return new RSVP.Promise((resolve, reject) => {
     this.list().then(fileNames => {
-      var promises = fileNames.map(this.find, this)
+      var promises = fileNames.map(this.find, this);
       RSVP.all(promises).then(resolve);
     }).catch(reject);
   });

@@ -4,7 +4,8 @@
   "description": "An abstraction for accessing the filesystem in Node.js.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "lint": "eslint"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   "homepage": "https://github.com/stevekinney/file-bin#readme",
   "devDependencies": {
     "chai": "^3.5.0",
+    "eslint": "^2.1.0",
     "mocha": "^2.4.5",
     "mock-fs": "^3.7.0"
   },
