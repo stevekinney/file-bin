@@ -16,7 +16,7 @@ function FileBin(baseDirectory, validExtensions) {
 
   this.base = baseDirectory || process.cwd();
   this.validExtensions = validExtensions || [];
-};
+}
 
 FileBin.prototype.find = function (fileName) {
   return new RSVP.Promise((resolve, reject) => {
