@@ -6,7 +6,7 @@ File Bin is an exercise in writing an abstraction for file system access in [Nod
 
 ## Why does this even exist?
 
-We're doing a project at the [Turing School for Software and Design][turing] building a note-taking application using Ember and Electron. Ember Data was designed to work with APIs—not the filesystem.
+We're doing a project at the [Turing School of Software and Design][turing] building a note-taking application using Ember and Electron. Ember Data was designed to work with APIs—not the filesystem.
 
 - `fs.readdir` returns an array of strings. APIs normally return an array of objects.
 - You have to distinguish between directories and files. `fs.read` doesn't work on directories.
