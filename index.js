@@ -1,6 +1,5 @@
 'use strict';
 
-const process = require('process');
 const fs = require('fs');
 const path = require('path');
 
@@ -14,7 +13,7 @@ function FileBin(baseDirectory, validExtensions) {
     throw new Error('Must be instantiated with the "new" keyword.');
   }
 
-  this.base = baseDirectory || process.cwd();
+  this.base = baseDirectory || __dirname;
   this.validExtensions = validExtensions || [];
 }
 
@@ -58,10 +57,19 @@ FileBin.prototype.write = function (fileName, data) {
   });
 };
 
-function filterInvalidExtensions(fileBin, files) {
-  if (!fileBin.validExtensions.length) { return files; }
+FileBin.prototype.destroy = function (fileName) {
+  return new RSVP.Promise((resolve, reject) => {
+    fs.unlink(path.join(this.base, fileName), (error) => {
+      if (error) { return reject(error); }
+      resolve(formatFile(fileName));
+    });
+  });
+};
+
+function filterInvalidExtensions(instance, files) {
+  if (!instance.validExtensions.length) { return files; }
   return files.filter(file => {
-    return fileBin.validExtensions.indexOf(path.extname(file)) !== -1;
+    return instance.validExtensions.indexOf(path.extname(file)) !== -1;
   });
 }
 
