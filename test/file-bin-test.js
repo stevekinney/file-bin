@@ -306,4 +306,15 @@ describe('fileBin - Instance', () => {
 
    });
 
+   describe('#getBaseDirectory', () => {
+
+     it('should have a #getBaseDirectory method', () => {
+       assert.isDefined(this.instance.getBaseDirectory);
+     });
+
+     it('should return the base directory', () => {
+       assert.equal('/some/directory', this.instance.getBaseDirectory())
+     });
+   });
+
 });
