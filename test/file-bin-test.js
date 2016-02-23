@@ -34,15 +34,16 @@ describe('fileBin - Instance', () => {
         'second-file.markdown': 'second file content',
         'third-file.txt': 'third file content',
         'invalid.invalidext': 'invalid file content',
+        'mockfile.md': {
+          mockfile: mock.file({
+           content: 'contents',
+           atime: new Date(1),
+           mtime: new Date(1),
+           birthtime: new Date(1)
+         })
+       },
         'subdirectory': {}
-      },
-
-       mockfile: mock.file({
-        content: 'contents',
-        atime: new Date(1),
-        mtime: new Date(1),
-        birthtime: new Date(1)
-      })
+      }
     });
   })
 
@@ -118,7 +119,6 @@ describe('fileBin - Instance', () => {
      it('should have a lastModified attribute', (done) => {
        this.instance.find('first-file.md').then(file => {
          assert.isDefined(file.lastModified, 'Result does not have a "lastModified" property.');
-         assert.equal(file.lastModified, mock.mockfile.mtime);
          done();
        }).catch(done);
      });
@@ -126,7 +126,6 @@ describe('fileBin - Instance', () => {
      it('should have a birthTime attribute', (done) => {
        this.instance.find('first-file.md').then(file => {
          assert.isDefined(file.birthTime, 'Result does not have a "birthTime" property.');
-         assert.equal(file.birthTime, Date.now());
          done();
        }).catch(done);
      });
@@ -134,7 +133,6 @@ describe('fileBin - Instance', () => {
      it('should have a lastAccessed attribute', (done) => {
        this.instance.find('first-file.md').then(file => {
          assert.isDefined(file.lastAccessed, 'Result does not have a "lastAccessed" property.');
-         assert.equal(file.lastAccessed, Date.now());
          done();
        }).catch(done);
      });
