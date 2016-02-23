@@ -208,8 +208,8 @@ describe('fileBin - Instance', () => {
          this.instance.list().then(fileNames => {
            assert.notInclude(fileNames, 'first-file.md');
            done();
-         }).catch(done);
-       });
+         });
+       }).catch(done);
      });
    });
 
