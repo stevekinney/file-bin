@@ -194,20 +194,24 @@ describe('fileBin - Instance', () => {
    });
 
    describe('#destroy', () => {
+
      it('should have a #destroy method', () => {
        assert.isDefined(this.instance.destroy);
      });
 
-     xit('should find the selected file', () =>  {})
+     it('should return a thenable', () =>  {
+       assert.isFunction(this.instance.destroy().then);
+     });
 
-     xit('should destroy the file', (done) => {
-       this.instance.destroy('test.md').then(file => {
+     it('should destroy the file', (done) => {
+       this.instance.destroy('first-file.md').then(file => {
          this.instance.list().then(fileNames => {
-           refute.include(fileNames, 'test.md');
+           refute.include(fileNames, 'first-file.md');
            done();
          });
        }).catch(done);
      });
+
    });
 
 });
