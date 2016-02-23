@@ -35,9 +35,16 @@ describe('fileBin - Instance', () => {
         'third-file.txt': 'third file content',
         'invalid.invalidext': 'invalid file content',
         'subdirectory': {}
-      }
+      },
+
+       mockfile: mock.file({
+        content: 'contents',
+        atime: new Date(1),
+        mtime: new Date(1),
+        birthtime: new Date(1)
+      })
     });
-  });
+  })
 
   afterEach(() => {
     mock.restore();
@@ -82,7 +89,7 @@ describe('fileBin - Instance', () => {
      });
 
      it('should return a thenable', () => {
-       assert.isFunction(this.instance.find().then);
+       assert.isFunction(this.instance.find('first-file.md').then);
      });
 
      it('should resolve to have an id with the file name', (done) => {
@@ -107,6 +114,31 @@ describe('fileBin - Instance', () => {
           done();
        }).catch(done);
      });
+
+     it('should have a lastModified attribute', (done) => {
+       this.instance.find('first-file.md').then(file => {
+         assert.isDefined(file.lastModified, 'Result does not have a "lastModified" property.');
+         assert.equal(file.lastModified, mock.mockfile.mtime);
+         done();
+       }).catch(done);
+     });
+
+     it('should have a birthTime attribute', (done) => {
+       this.instance.find('first-file.md').then(file => {
+         assert.isDefined(file.birthTime, 'Result does not have a "birthTime" property.');
+         assert.equal(file.birthTime, Date.now());
+         done();
+       }).catch(done);
+     });
+
+     it('should have a lastAccessed attribute', (done) => {
+       this.instance.find('first-file.md').then(file => {
+         assert.isDefined(file.lastAccessed, 'Result does not have a "lastAccessed" property.');
+         assert.equal(file.lastAccessed, Date.now());
+         done();
+       }).catch(done);
+     });
+
 
    });
 
