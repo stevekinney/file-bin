@@ -62,3 +62,12 @@ fileBin.all().then(files => console.log(files));
 fileBin.write('CONTRIBUTORS.md', 'Pull requests accepted')
        .then(file => console.log(file));
 ```
+
+### Copying a File
+
+`#copy` takes two arguments `sourceFile` and `copyFile`. It will write the copied file to the filesystem and then return the copy via a promise.
+
+```js
+fileBin.copy('orignal.md', 'original-copy.md')
+       .then(copy => console.log(copy));
+```

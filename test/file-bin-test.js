@@ -194,4 +194,35 @@ describe('fileBin - Instance', () => {
 
    });
 
+   describe('#copy', () => {
+
+     it('should have a #copy method', () => {
+       assert.isDefined(this.instance.copy);
+     });
+
+     it('should return a thenable', () => {
+       assert.isFunction(this.instance.copy('first-file.md', 'copy.md').then);
+     });
+
+     it('should copy the file', (done) => {
+       this.instance.copy('first-file.md', 'test-copy.md').then(file => {
+         this.instance.list().then(fileNames => {
+           assert.include(fileNames, 'test-copy.md');
+           done();
+         });
+       }).catch(done);
+     });
+
+     it('should have same contents of source file', (done) => {
+       this.instance.copy('first-file.md', 'first-file-copy.md').then(copy => {
+         this.instance.find('first-file.md').then(original => {
+           assert.equal(copy.content, original.content);
+           console.log(copy.content, original.content);
+           done();
+         }).catch(done);
+       }).catch(done);
+     });
+
+   });
+
 });

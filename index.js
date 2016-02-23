@@ -57,6 +57,16 @@ FileBin.prototype.write = function (fileName, data) {
   });
 };
 
+FileBin.prototype.copy = function (sourceFile, copyFile) {
+  return new RSVP.Promise((resolve, reject) => {
+    this.find(sourceFile).then(source => {
+      this.write(copyFile, source.content).then(copy => {
+        resolve(copy);
+      }).catch(reject);
+    }).catch(reject);
+  });
+};
+
 function filterInvalidExtensions(instance, files) {
   if (!instance.validExtensions.length) { return files; }
   return files.filter(file => {
@@ -67,7 +77,7 @@ function filterInvalidExtensions(instance, files) {
 function formatFile(fileName, content) {
   return {
     id: fileName,
-    content: content
+    content: content.toString()
   };
 }
 
