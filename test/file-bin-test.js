@@ -191,7 +191,23 @@ describe('fileBin - Instance', () => {
          });
        }).catch(done);
      });
+   });
 
+   describe('#destroy', () => {
+     it('should have a #destroy method', () => {
+       assert.isDefined(this.instance.destroy);
+     });
+
+     xit('should find the selected file', () =>  {})
+
+     xit('should destroy the file', (done) => {
+       this.instance.destroy('test.md').then(file => {
+         this.instance.list().then(fileNames => {
+           refute.include(fileNames, 'test.md');
+           done();
+         });
+       }).catch(done);
+     });
    });
 
 });
