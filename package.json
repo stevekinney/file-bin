@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "async": "^1.5.2",
-    "mocha": "2.4.5",
     "rsvp": "^3.2.1"
   }
 }
