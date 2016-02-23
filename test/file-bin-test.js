@@ -206,12 +206,11 @@ describe('fileBin - Instance', () => {
      it('should destroy the file', (done) => {
        this.instance.destroy('first-file.md').then(file => {
          this.instance.list().then(fileNames => {
-           refute.include(fileNames, 'first-file.md');
+           assert.notInclude(fileNames, 'first-file.md');
            done();
-         });
-       }).catch(done);
+         }).catch(done);
+       });
      });
-
    });
 
 });

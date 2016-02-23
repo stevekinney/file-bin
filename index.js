@@ -59,9 +59,9 @@ FileBin.prototype.write = function (fileName, data) {
 
 FileBin.prototype.destroy = function (fileName) {
   return new RSVP.Promise((resolve, reject) => {
-    fs.unlink(path.join(this.base, fileName), (error, file) => {
+    fs.unlink(path.join(this.base, fileName), (error) => {
       if (error) { return reject(error); }
-      resolve(formatFile(fileName, file));
+      resolve(formatFile(fileName));
     });
   });
 };
