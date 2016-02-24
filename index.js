@@ -57,6 +57,42 @@ FileBin.prototype.write = function (fileName, data) {
   });
 };
 
+FileBin.prototype.copy = function (sourceFile, copyFile) {
+  return new RSVP.Promise((resolve, reject) => {
+    this.find(sourceFile).then(source => {
+      this.write(copyFile, source.content).then(copy => {
+        resolve(copy);
+      }).catch(reject);
+    }).catch(reject);
+  });
+};
+
+FileBin.prototype.destroy = function (fileName) {
+  return new RSVP.Promise((resolve, reject) => {
+    fs.unlink(path.join(this.base, fileName), (error) => {
+      if (error) { return reject(error); }
+      resolve(true);
+    });
+  });
+};
+
+FileBin.prototype.rename = function (oldFileName, newFileName) {
+  var oldFullPath = path.join(this.base, oldFileName);
+  var newFullPath = path.join(this.base, newFileName);
+  return new RSVP.Promise((resolve, reject) => {
+    fs.rename(oldFullPath, newFullPath, (error) => {
+      if (error) { reject(error); }
+      this.find(newFileName).then((file) => {
+        return resolve(file, newFullPath, oldFullPath);
+      });
+    });
+  });
+};
+
+FileBin.prototype.getBaseDirectory = function() {
+  return this.base;
+};
+
 FileBin.prototype.setBaseDirectory = function (directoryName) {
   if (!directoryName){ throw new Error('Directory name can\'t be blank.'); }
   this.base = directoryName
@@ -74,7 +110,7 @@ function filterInvalidExtensions(instance, files) {
 function formatFile(fileName, content) {
   return {
     id: fileName,
-    content: content
+    content: content.toString()
   };
 }
 
