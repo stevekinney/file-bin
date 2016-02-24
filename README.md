@@ -90,6 +90,18 @@ fileBin.destroy('filename.md')
   .then(console.log(`true`))
 ```
 
+<<<<<<< HEAD
+=======
+### Copying a File
+
+`#copy` takes two arguments `sourceFile` and `copyFile`. It will write the copied file to the filesystem and then return the copy via a promise.
+
+```js
+fileBin.copy('orignal.md', 'original-copy.md')
+       .then(copy => console.log(copy));
+```
+
+>>>>>>> jillmd501-file-stats
 ### Base Directory Getters and Setters
 
 `#getBaseDirectory` can be called on a FileBin instance and it will return the current base directory.
@@ -105,3 +117,7 @@ fileBin.setBaseDirectory('/new/base');
 
 console.log(fileBin.getBaseDirectory()); // --> /new/base;
 ```
+<<<<<<< HEAD
+=======
+
+>>>>>>> jillmd501-file-stats
