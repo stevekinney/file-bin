@@ -34,10 +34,18 @@ describe('fileBin - Instance', () => {
         'second-file.markdown': 'second file content',
         'third-file.txt': 'third file content',
         'invalid.invalidext': 'invalid file content',
+        'mockfile.md': {
+          mockfile: mock.file({
+           content: 'contents',
+           atime: new Date(1),
+           mtime: new Date(1),
+           birthtime: new Date(1)
+         })
+       },
         'subdirectory': {}
       }
     });
-  });
+  })
 
   afterEach(() => {
     mock.restore();
@@ -81,9 +89,9 @@ describe('fileBin - Instance', () => {
       assert.isDefined(this.instance.find);
     });
 
-    it('should return a thenable', () => {
-      assert.isFunction(this.instance.find().then);
-    });
+     it('should return a thenable', () => {
+       assert.isFunction(this.instance.find('first-file.md').then);
+     });
 
     it('should resolve to have an id with the file name', (done) => {
       this.instance.find('first-file.md').then(file => {
@@ -104,6 +112,27 @@ describe('fileBin - Instance', () => {
     it('should throw an error if there is no file by that name', (done) => {
       this.instance.find('not-really-there.md').catch(error => {
         assert.equal(error.code, 'ENOENT');
+        done();
+      }).catch(done);
+    });
+
+    it('should have a lastModified attribute', (done) => {
+      this.instance.find('first-file.md').then(file => {
+        assert.isDefined(file.lastModified, 'Result does not have a "lastModified" property.');
+        done();
+      }).catch(done);
+    });
+
+    it('should have a birthTime attribute', (done) => {
+      this.instance.find('first-file.md').then(file => {
+        assert.isDefined(file.birthTime, 'Result does not have a "birthTime" property.');
+        done();
+      }).catch(done);
+    });
+
+    it('should have a lastAccessed attribute', (done) => {
+      this.instance.find('first-file.md').then(file => {
+        assert.isDefined(file.lastAccessed, 'Result does not have a "lastAccessed" property.');
         done();
       }).catch(done);
     });
@@ -262,6 +291,77 @@ describe('fileBin - Instance', () => {
          }).catch(done);
        }).catch(done);
      });
+
+   });
+
+   describe('#copy', () => {
+
+     it('should have a #copy method', () => {
+       assert.isDefined(this.instance.copy);
+     });
+
+     it('should return a thenable', () => {
+       assert.isFunction(this.instance.copy('first-file.md', 'copy.md').then);
+     });
+
+     it('should copy the file', (done) => {
+       this.instance.copy('first-file.md', 'test-copy.md').then(file => {
+         this.instance.list().then(fileNames => {
+           assert.include(fileNames, 'test-copy.md');
+           done();
+         });
+       }).catch(done);
+     });
+
+     it('should have same contents of source file', (done) => {
+       this.instance.copy('first-file.md', 'first-file-copy.md').then(copy => {
+         this.instance.find('first-file.md').then(original => {
+           assert.equal(copy.content, original.content);
+           console.log(copy.content, original.content);
+           done();
+         }).catch(done);
+       }).catch(done);
+     });
+
+   });
+
+   describe('#getBaseDirectory', () => {
+
+     it('should have a #getBaseDirectory method', () => {
+       assert.isDefined(this.instance.getBaseDirectory);
+     });
+
+     it('should return the base directory', () => {
+       assert.equal('/some/directory', this.instance.getBaseDirectory())
+     });
+   });
+
+   describe('#rename', () => {
+      it('should have a #rename method', () => {
+        assert.isDefined(this.instance.rename);
+      });
+
+      it('should return a thenable', () => {
+        assert.isFunction(this.instance.rename('test.md', 'wowow.md').then);
+      });
+
+      it('should rename the file', (done) => {
+        this.instance.rename('first-file.md', 'wowowow.md').then(file => {
+          this.instance.list().then(fileNames => {
+            assert.include(fileNames, 'wowowow.md');
+            assert.notInclude(fileNames, 'first-file.md');
+            done();
+          });
+        }).catch(done);
+      });
+
+      it('returns the actual file', (done) => {
+        this.instance.rename('first-file.md', 'renamed-wowow.md').then(file => {
+          assert.equal(file.id, 'renamed-wowow.md');
+          assert.equal(file.content, 'first file content');
+          done();
+        }).catch(done);
+      });
 
    });
 
