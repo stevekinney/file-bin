@@ -2,7 +2,6 @@
 
 const fs = require('fs');
 const path = require('path');
-
 const async = require('async');
 const RSVP = require('rsvp');
 
@@ -18,13 +17,17 @@ function FileBin(baseDirectory, validExtensions) {
 }
 
 FileBin.prototype.find = function (fileName) {
+  var fullPath = path.join(this.base, fileName);
   return new RSVP.Promise((resolve, reject) => {
-    fs.readFile(path.join(this.base, fileName), (error, file) => {
-      if (error) { return reject(error); }
-      return resolve(formatFile(fileName, file));
+    fs.readFile(fullPath, (error, file) => {
+      fs.stat(fullPath, (err, stats) =>  {
+        if (error) { return reject(error); }
+        return resolve(formatFile(fileName, file, stats));
+      });
     });
   });
 };
+
 
 FileBin.prototype.list = function () {
   return new RSVP.Promise((resolve, reject) => {
@@ -57,7 +60,51 @@ FileBin.prototype.write = function (fileName, data) {
   });
 };
 
-FileBin.prototype.baseDirectoryEvent = function(){
+FileBin.prototype.destroy = function (fileName) {
+  return new RSVP.Promise((resolve, reject) => {
+    fs.unlink(path.join(this.base, fileName), (error) => {
+      if (error) { return reject(error); }
+      resolve( { id: fileName } );
+    });
+  });
+};
+
+FileBin.prototype.rename = function (oldFileName, newFileName) {
+  var oldFullPath = path.join(this.base, oldFileName);
+  var newFullPath = path.join(this.base, newFileName);
+  return new RSVP.Promise((resolve, reject) => {
+    fs.rename(oldFullPath, newFullPath, (error) => {
+      if (error) { reject(error); }
+      this.find(newFileName).then((file) => {
+        return resolve(file, newFullPath, oldFullPath);
+      });
+    });
+  })
+};
+
+FileBin.prototype.copy = function (sourceFile, copyFile) {
+  return new RSVP.Promise((resolve, reject) => {
+    this.find(sourceFile).then(source => {
+      this.write(copyFile, source.content).then(copy => {
+        resolve(copy);
+      }).catch(reject);
+    }).catch(reject);
+  });
+};
+
+FileBin.prototype.getBaseDirectory = function() {
+  return this.base;
+};
+
+FileBin.prototype.getBaseDirectory = function() {
+  return this.base;
+};
+
+FileBin.prototype.setBaseDirectory = function (directoryName) {
+  if (!directoryName){ throw new Error('Directory name can\'t be blank.'); }
+  this.base = directoryName
+
+  return this
 };
 
 function filterInvalidExtensions(instance, files) {
@@ -67,11 +114,20 @@ function filterInvalidExtensions(instance, files) {
   });
 }
 
-function formatFile(fileName, content) {
-  return {
+
+function formatFile(fileName, content, stats) {
+  var statistics = {
     id: fileName,
-    content: content
-  };
-}
+    content: content.toString()
+  }
+
+  if (stats instanceof fs.Stats) {
+    statistics.lastModified =  new Date(stats.mtime);
+    statistics.birthTime = new Date(stats.birthtime);
+    statistics.lastAccessed =  new Date(stats.atime);
+  }
+
+  return statistics;
+};
 
 module.exports = FileBin;
