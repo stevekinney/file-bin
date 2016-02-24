@@ -2,7 +2,6 @@
 
 const fs = require('fs');
 const path = require('path');
-
 const async = require('async');
 const RSVP = require('rsvp');
 
@@ -18,13 +17,17 @@ function FileBin(baseDirectory, validExtensions) {
 }
 
 FileBin.prototype.find = function (fileName) {
+  var fullPath = path.join(this.base, fileName);
   return new RSVP.Promise((resolve, reject) => {
-    fs.readFile(path.join(this.base, fileName), (error, file) => {
-      if (error) { return reject(error); }
-      return resolve(formatFile(fileName, file));
+    fs.readFile(fullPath, (error, file) => {
+      fs.stat(fullPath, (err, stats) =>  {
+        if (error) { return reject(error); }
+        return resolve(formatFile(fileName, file, stats));
+      });
     });
   });
 };
+
 
 FileBin.prototype.list = function () {
   return new RSVP.Promise((resolve, reject) => {
@@ -77,11 +80,20 @@ function filterInvalidExtensions(instance, files) {
   });
 }
 
-function formatFile(fileName, content) {
-  return {
+
+function formatFile(fileName, content, stats) {
+  var statistics = {
     id: fileName,
-    content: content
+    content: content,
   };
+
+  if (stats instanceof fs.Stats) {
+    statistics.lastModified =  new Date(stats.mtime);
+    statistics.birthTime = new Date(stats.birthtime);
+    statistics.lastAccessed =  new Date(stats.atime);
+  }
+
+  return statistics;
 }
 
 module.exports = FileBin;
