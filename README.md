@@ -63,6 +63,15 @@ fileBin.write('CONTRIBUTORS.md', 'Pull requests accepted')
        .then(file => console.log(file));
 ```
 
+### Copying a File
+
+`#copy` takes two arguments `sourceFile` and `copyFile`. It will write the copied file to the filesystem and then return the copy via a promise.
+
+```js
+fileBin.copy('orignal.md', 'original-copy.md')
+       .then(copy => console.log(copy));
+```
+
 ### Renaming a file
 
 `#rename` takes two arguments `oldFileName` and `newFileName`. It will rename the old file to the specified new file name and return the file object via a promise.
@@ -72,7 +81,6 @@ fileBin.rename('old-name.md', 'new-name.md')
        .then((file, oldFileName, newFileName) => console.log(`${oldFileName} was successfully renamed to ${newFileName}.`)
 ```
 
-<<<<<<< HEAD
 ### Destroying a file
 
 `#destroy` takes a single argument of the `fileName` that you want to delete. It will delete the specified file and return true via a promise.
