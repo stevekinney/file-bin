@@ -57,6 +57,19 @@ FileBin.prototype.write = function (fileName, data) {
   });
 };
 
+FileBin.prototype.rename = function (oldFileName, newFileName) {
+  var oldFullPath = path.join(this.base, oldFileName);
+  var newFullPath = path.join(this.base, newFileName);
+  return new RSVP.Promise((resolve, reject) => {
+    fs.rename(oldFullPath, newFullPath, (error) => {
+      if (error) { reject(error); }
+      this.find(newFileName).then((file) => {
+        return resolve(file, newFullPath, oldFullPath);
+      });
+    });
+  });
+};
+
 FileBin.prototype.getBaseDirectory = function() {
   return this.base;
 };
