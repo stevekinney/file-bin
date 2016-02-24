@@ -71,7 +71,6 @@ fileBin.write('CONTRIBUTORS.md', 'Pull requests accepted')
 fileBin.rename('old-name.md', 'new-name.md')
        .then((file, oldFileName, newFileName) => console.log(`${oldFileName} was successfully renamed to ${newFileName}.`)
 ```
-<<<<<<< HEAD
 
 ### Destroying a file
 
@@ -90,5 +89,20 @@ fileBin.destroy('filename.md')
 fileBin.copy('orignal.md', 'original-copy.md')
        .then(copy => console.log(copy));
 ```
-=======
->>>>>>> e4cc118... add rename method, tests, and update README.md
+
+### Base Directory Getters and Setters
+
+`#getBaseDirectory` can be called on a FileBin instance and it will return the current base directory.
+
+`#setBaseDirectory('/new/base')` takes in a directory as an argument and will update the FileBin's base directory to the given directory.
+
+```js
+var fileBin = new FileBin('/some/directory')
+
+console.log(fileBin.getBaseDirectory()); // --> /some/directory;
+
+fileBin.setBaseDirectory('/new/base');
+
+console.log(fileBin.getBaseDirectory()); // --> /new/base;
+```
+
