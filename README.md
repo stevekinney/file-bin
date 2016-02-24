@@ -71,3 +71,12 @@ fileBin.write('CONTRIBUTORS.md', 'Pull requests accepted')
 fileBin.rename('old-name.md', 'new-name.md')
        .then((file, oldFileName, newFileName) => console.log(`${oldFileName} was successfully renamed to ${newFileName}.`)
 ```
+
+### Destroying a file
+
+`#destroy` takes a single argument of the `fileName` that you want to delete. It will delete the specified file and return true via a promise.
+
+```js
+fileBin.destroy('filename.md')
+  .then(console.log(`true`))
+```
