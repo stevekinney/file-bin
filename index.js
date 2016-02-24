@@ -61,7 +61,7 @@ FileBin.prototype.destroy = function (fileName) {
   return new RSVP.Promise((resolve, reject) => {
     fs.unlink(path.join(this.base, fileName), (error) => {
       if (error) { return reject(error); }
-      resolve(formatFile(fileName));
+      resolve(true);
     });
   });
 };
