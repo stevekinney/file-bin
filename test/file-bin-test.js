@@ -192,6 +192,11 @@ describe('fileBin - Instance', () => {
        }).catch(done);
      });
 
-   });
+  });
 
+  describe('#baseDirectoryEvent', () => {
+    it('should have a #baseDirectoryEvent method', () => {
+      assert.isDefined(this.instance.baseDirectoryEvent);
+    });
+  });
 });

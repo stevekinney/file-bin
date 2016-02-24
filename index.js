@@ -57,6 +57,9 @@ FileBin.prototype.write = function (fileName, data) {
   });
 };
 
+FileBin.prototype.baseDirectoryEvent = function(){
+};
+
 function filterInvalidExtensions(instance, files) {
   if (!instance.validExtensions.length) { return files; }
   return files.filter(file => {
