@@ -90,7 +90,7 @@ FileBin.prototype.rename = function (oldFileName, newFileName) {
       });
     });
   })
-});
+};
 
 FileBin.prototype.copy = function (sourceFile, copyFile) {
   return new RSVP.Promise((resolve, reject) => {
@@ -100,7 +100,7 @@ FileBin.prototype.copy = function (sourceFile, copyFile) {
       }).catch(reject);
     }).catch(reject);
   });
-});
+};
 
 FileBin.prototype.getBaseDirectory = function() {
   return this.base;
@@ -108,6 +108,13 @@ FileBin.prototype.getBaseDirectory = function() {
 
 FileBin.prototype.getBaseDirectory = function() {
   return this.base;
+};
+
+FileBin.prototype.setBaseDirectory = function (directoryName) {
+  if (!directoryName){ throw new Error('Directory name can\'t be blank.'); }
+  this.base = directoryName
+
+  return this
 };
 
 function filterInvalidExtensions(instance, files) {
@@ -121,20 +128,8 @@ function filterInvalidExtensions(instance, files) {
 function formatFile(fileName, content, stats) {
   var statistics = {
     id: fileName,
-<<<<<<< HEAD
     content: content.toString()
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-    content: content.toString()
-=======
-    content: content,
->>>>>>> dd66429... new PR
-=======
-    content: content,
->>>>>>> 30e78e4... Work on created at funcitonality
->>>>>>> jillmd501-file-stats
-  };
+  }
 
   if (stats instanceof fs.Stats) {
     statistics.lastModified =  new Date(stats.mtime);
@@ -143,6 +138,6 @@ function formatFile(fileName, content, stats) {
   }
 
   return statistics;
-}
+};
 
 module.exports = FileBin;

@@ -336,6 +336,23 @@ describe('fileBin - Instance', () => {
      });
    });
 
+   describe('#setBaseDirectory', () => {
+     it('should have a #setBaseDirectory method', () => {
+       assert.isDefined(this.instance.setBaseDirectory);
+     });
+
+     it('should set the Base Directory', () => {
+       assert.equal(this.instance.base, '/some/directory')
+       this.instance.setBaseDirectory('/new/directory')
+       assert.equal(this.instance.base, '/new/directory')
+     });
+
+     it('will not set Base Directory with empty string', () => {
+       assert.throws(() => this.instance.setBaseDirectory(''),
+                           'Directory name can\'t be blank.');
+     });
+   });
+
    describe('#rename', () => {
       it('should have a #rename method', () => {
         assert.isDefined(this.instance.rename);
