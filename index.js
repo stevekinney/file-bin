@@ -57,6 +57,7 @@ FileBin.prototype.write = function (fileName, data) {
   });
 };
 
+<<<<<<< HEAD
 FileBin.prototype.destroy = function (fileName) {
   return new RSVP.Promise((resolve, reject) => {
     fs.unlink(path.join(this.base, fileName), (error) => {
@@ -76,6 +77,8 @@ FileBin.prototype.rename = function (oldFileName, newFileName) {
         return resolve(file, newFullPath, oldFullPath);
       });
     });
+  })
+});
 
 FileBin.prototype.copy = function (sourceFile, copyFile) {
   return new RSVP.Promise((resolve, reject) => {

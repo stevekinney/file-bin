@@ -71,6 +71,7 @@ fileBin.write('CONTRIBUTORS.md', 'Pull requests accepted')
 fileBin.rename('old-name.md', 'new-name.md')
        .then((file, oldFileName, newFileName) => console.log(`${oldFileName} was successfully renamed to ${newFileName}.`)
 ```
+<<<<<<< HEAD
 
 ### Destroying a file
 
@@ -89,3 +90,5 @@ fileBin.destroy('filename.md')
 fileBin.copy('orignal.md', 'original-copy.md')
        .then(copy => console.log(copy));
 ```
+=======
+>>>>>>> e4cc118... add rename method, tests, and update README.md

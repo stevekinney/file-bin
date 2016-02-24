@@ -317,4 +317,33 @@ describe('fileBin - Instance', () => {
      });
    });
 
+   describe('#rename', () => {
+      it('should have a #rename method', () => {
+        assert.isDefined(this.instance.rename);
+      });
+
+      it('should return a thenable', () => {
+        assert.isFunction(this.instance.rename('test.md', 'wowow.md').then);
+      });
+
+      it('should rename the file', (done) => {
+        this.instance.rename('first-file.md', 'wowowow.md').then(file => {
+          this.instance.list().then(fileNames => {
+            assert.include(fileNames, 'wowowow.md');
+            assert.notInclude(fileNames, 'first-file.md');
+            done();
+          });
+        }).catch(done);
+      });
+
+      it('returns the actual file', (done) => {
+        this.instance.rename('first-file.md', 'renamed-wowow.md').then(file => {
+          assert.equal(file.id, 'renamed-wowow.md');
+          assert.equal(file.content, 'first file content');
+          done();
+        }).catch(done);
+      });
+
+   });
+
 });
