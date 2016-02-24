@@ -57,6 +57,7 @@ FileBin.prototype.write = function (fileName, data) {
   });
 };
 
+<<<<<<< HEAD
 FileBin.prototype.destroy = function (fileName) {
   return new RSVP.Promise((resolve, reject) => {
     fs.unlink(path.join(this.base, fileName), (error) => {
@@ -76,6 +77,15 @@ FileBin.prototype.rename = function (oldFileName, newFileName) {
         return resolve(file, newFullPath, oldFullPath);
       });
     });
+=======
+FileBin.prototype.copy = function (sourceFile, copyFile) {
+  return new RSVP.Promise((resolve, reject) => {
+    this.find(sourceFile).then(source => {
+      this.write(copyFile, source.content).then(copy => {
+        resolve(copy);
+      }).catch(reject);
+    }).catch(reject);
+>>>>>>> c86b165... implement #copy method incuding tests
   });
 };
 
@@ -89,7 +99,7 @@ function filterInvalidExtensions(instance, files) {
 function formatFile(fileName, content) {
   return {
     id: fileName,
-    content: content
+    content: content.toString()
   };
 }
 
