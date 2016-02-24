@@ -62,3 +62,19 @@ fileBin.all().then(files => console.log(files));
 fileBin.write('CONTRIBUTORS.md', 'Pull requests accepted')
        .then(file => console.log(file));
 ```
+
+### Base Directory Getters and Setters
+
+`#getBaseDirectory` can be called on a FileBin instance and it will return the current base directory.  
+
+`#setBaseDirectory('/new/base')` takes in a directory as an argument and will update the FileBin's base directory to the given directory.  
+
+```js
+var fileBin = new FileBin('/some/directory')
+
+console.log(fileBin.getBaseDirectory()); // --> /some/directory;
+
+fileBin.setBaseDirectory('/new/base');
+
+console.log(fileBin.getBaseDirectory()); // --> /new/base;
+```

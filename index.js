@@ -58,11 +58,11 @@ FileBin.prototype.write = function (fileName, data) {
 };
 
 FileBin.prototype.setBaseDirectory = function (directoryName) {
-      if (!directoryName){ throw new Error('Directory name can\'t be blank.'); }
-      this.base = directoryName
+  if (!directoryName){ throw new Error('Directory name can\'t be blank.'); }
+  this.base = directoryName
 
-      return this
-    };
+  return this
+};
 
 function filterInvalidExtensions(instance, files) {
   if (!instance.validExtensions.length) { return files; }
