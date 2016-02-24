@@ -191,6 +191,87 @@ describe('fileBin - Instance', () => {
          });
        }).catch(done);
      });
+   });
+
+   describe('#destroy', () => {
+
+     it('should have a #destroy method', () => {
+       assert.isDefined(this.instance.destroy);
+     });
+
+     it('should return a thenable', () =>  {
+       assert.isFunction(this.instance.destroy().then);
+     });
+
+     it('should destroy the file', (done) => {
+       this.instance.destroy('first-file.md').then(file => {
+         this.instance.list().then(fileNames => {
+           assert.notInclude(fileNames, 'first-file.md');
+           done();
+         }).catch(done);
+       });
+     });
+   });
+
+   describe('#rename', () => {
+      it('should have a #rename method', () => {
+        assert.isDefined(this.instance.rename);
+      });
+
+      it('should return a thenable', () => {
+        assert.isFunction(this.instance.rename('test.md', 'wowow.md').then);
+      });
+
+      it('should rename the file', (done) => {
+        this.instance.rename('first-file.md', 'wowowow.md').then(file => {
+          this.instance.list().then(fileNames => {
+            assert.include(fileNames, 'wowowow.md');
+            assert.notInclude(fileNames, 'first-file.md');
+            done();
+          });
+        }).catch(done);
+      });
+
+      it('returns the actual file', (done) => {
+        this.instance.rename('first-file.md', 'renamed-wowow.md').then(file => {
+          assert.equal(file.id, 'renamed-wowow.md');
+          assert.equal(file.content, 'first file content');
+          done();
+        }).catch(done);
+      });
+
+     it('should have a #destroy method', () => {
+       assert.isDefined(this.instance.destroy);
+     });
+
+   });
+
+   describe('#rename', () => {
+      it('should have a #rename method', () => {
+        assert.isDefined(this.instance.rename);
+      });
+
+      it('should return a thenable', () => {
+        assert.isFunction(this.instance.rename('test.md', 'wowow.md').then);
+      });
+
+      it('should rename the file', (done) => {
+        this.instance.rename('first-file.md', 'wowowow.md').then(file => {
+          this.instance.list().then(fileNames => {
+            assert.include(fileNames, 'wowowow.md');
+            assert.notInclude(fileNames, 'first-file.md');
+            done();
+          });
+        }).catch(done);
+      });
+
+      it('returns the actual file', (done) => {
+        this.instance.rename('first-file.md', 'renamed-wowow.md').then(file => {
+          assert.equal(file.id, 'renamed-wowow.md');
+          assert.equal(file.content, 'first file content');
+          done();
+        }).catch(done);
+      });
 
    });
 

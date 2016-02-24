@@ -57,6 +57,28 @@ FileBin.prototype.write = function (fileName, data) {
   });
 };
 
+FileBin.prototype.destroy = function (fileName) {
+  return new RSVP.Promise((resolve, reject) => {
+    fs.unlink(path.join(this.base, fileName), (error) => {
+      if (error) { return reject(error); }
+      resolve(true);
+    });
+  });
+};
+
+FileBin.prototype.rename = function (oldFileName, newFileName) {
+  var oldFullPath = path.join(this.base, oldFileName);
+  var newFullPath = path.join(this.base, newFileName);
+  return new RSVP.Promise((resolve, reject) => {
+    fs.rename(oldFullPath, newFullPath, (error) => {
+      if (error) { reject(error); }
+      this.find(newFileName).then((file) => {
+        return resolve(file, newFullPath, oldFullPath);
+      });
+    });
+  });
+};
+
 function filterInvalidExtensions(instance, files) {
   if (!instance.validExtensions.length) { return files; }
   return files.filter(file => {
