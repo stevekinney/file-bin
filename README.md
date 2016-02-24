@@ -72,6 +72,7 @@ fileBin.rename('old-name.md', 'new-name.md')
        .then((file, oldFileName, newFileName) => console.log(`${oldFileName} was successfully renamed to ${newFileName}.`)
 ```
 
+<<<<<<< HEAD
 ### Destroying a file
 
 `#destroy` takes a single argument of the `fileName` that you want to delete. It will delete the specified file and return true via a promise.
@@ -79,4 +80,20 @@ fileBin.rename('old-name.md', 'new-name.md')
 ```js
 fileBin.destroy('filename.md')
   .then(console.log(`true`))
+```
+
+### Base Directory Getters and Setters
+
+`#getBaseDirectory` can be called on a FileBin instance and it will return the current base directory.
+
+`#setBaseDirectory('/new/base')` takes in a directory as an argument and will update the FileBin's base directory to the given directory.
+
+```js
+var fileBin = new FileBin('/some/directory')
+
+console.log(fileBin.getBaseDirectory()); // --> /some/directory;
+
+fileBin.setBaseDirectory('/new/base');
+
+console.log(fileBin.getBaseDirectory()); // --> /new/base;
 ```

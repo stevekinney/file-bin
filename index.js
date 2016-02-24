@@ -57,6 +57,7 @@ FileBin.prototype.write = function (fileName, data) {
   });
 };
 
+<<<<<<< HEAD
 FileBin.prototype.destroy = function (fileName) {
   return new RSVP.Promise((resolve, reject) => {
     fs.unlink(path.join(this.base, fileName), (error) => {
@@ -66,6 +67,8 @@ FileBin.prototype.destroy = function (fileName) {
   });
 };
 
+=======
+>>>>>>> 1f70a8be8cd325d4c60683f0be7d8c9d888ef7b0
 FileBin.prototype.rename = function (oldFileName, newFileName) {
   var oldFullPath = path.join(this.base, oldFileName);
   var newFullPath = path.join(this.base, newFileName);
@@ -79,6 +82,13 @@ FileBin.prototype.rename = function (oldFileName, newFileName) {
   });
 };
 
+<<<<<<< HEAD
+=======
+FileBin.prototype.getBaseDirectory = function() {
+  return this.base;
+};
+
+>>>>>>> 1f70a8be8cd325d4c60683f0be7d8c9d888ef7b0
 function filterInvalidExtensions(instance, files) {
   if (!instance.validExtensions.length) { return files; }
   return files.filter(file => {
