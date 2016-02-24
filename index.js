@@ -2,7 +2,6 @@
 
 const fs = require('fs');
 const path = require('path');
-
 const async = require('async');
 const RSVP = require('rsvp');
 
@@ -18,13 +17,17 @@ function FileBin(baseDirectory, validExtensions) {
 }
 
 FileBin.prototype.find = function (fileName) {
+  var fullPath = path.join(this.base, fileName);
   return new RSVP.Promise((resolve, reject) => {
-    fs.readFile(path.join(this.base, fileName), (error, file) => {
-      if (error) { return reject(error); }
-      return resolve(formatFile(fileName, file));
+    fs.readFile(fullPath, (error, file) => {
+      fs.stat(fullPath, (err, stats) =>  {
+        if (error) { return reject(error); }
+        return resolve(formatFile(fileName, file, stats));
+      });
     });
   });
 };
+
 
 FileBin.prototype.list = function () {
   return new RSVP.Promise((resolve, reject) => {
@@ -57,7 +60,6 @@ FileBin.prototype.write = function (fileName, data) {
   });
 };
 
-<<<<<<< HEAD
 FileBin.prototype.destroy = function (fileName) {
   return new RSVP.Promise((resolve, reject) => {
     fs.unlink(path.join(this.base, fileName), (error) => {
@@ -101,11 +103,28 @@ function filterInvalidExtensions(instance, files) {
   });
 }
 
-function formatFile(fileName, content) {
-  return {
+
+function formatFile(fileName, content, stats) {
+  var statistics = {
     id: fileName,
+<<<<<<< HEAD
+<<<<<<< HEAD
     content: content.toString()
+=======
+    content: content,
+>>>>>>> dd66429... new PR
+=======
+    content: content,
+>>>>>>> 30e78e4... Work on created at funcitonality
   };
+
+  if (stats instanceof fs.Stats) {
+    statistics.lastModified =  new Date(stats.mtime);
+    statistics.birthTime = new Date(stats.birthtime);
+    statistics.lastAccessed =  new Date(stats.atime);
+  }
+
+  return statistics;
 }
 
 module.exports = FileBin;
