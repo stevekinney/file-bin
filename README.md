@@ -89,6 +89,7 @@ fileBin.rename('old-name.md', 'new-name.md')
 fileBin.destroy('filename.md')
   .then(console.log(`true`))
 ```
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 =======
@@ -121,3 +122,5 @@ console.log(fileBin.getBaseDirectory()); // --> /new/base;
 =======
 
 >>>>>>> jillmd501-file-stats
+=======
+>>>>>>> a8dcdbb5162ca5fc0c7ea4b879570a881f855767

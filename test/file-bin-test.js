@@ -346,10 +346,25 @@ describe('fileBin - Instance', () => {
        this.instance.setBaseDirectory('/new/directory')
        assert.equal(this.instance.base, '/new/directory')
      });
+   });
 
-     it('will not set Base Directory with empty string', () => {
-       assert.throws(() => this.instance.setBaseDirectory(''),
-                           'Directory name can\'t be blank.');
+   describe('#destroy', () => {
+
+     it('should have a #destroy method', () => {
+       assert.isDefined(this.instance.destroy);
+     });
+
+     it('should return a thenable', () =>  {
+       assert.isFunction(this.instance.destroy().then);
+     });
+
+     it('should destroy the file', (done) => {
+       this.instance.destroy('first-file.md').then(file => {
+         this.instance.list().then(fileNames => {
+           assert.notInclude(fileNames, 'first-file.md');
+           done();
+         });
+       }).catch(done);
      });
    });
 

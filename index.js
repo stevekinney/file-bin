@@ -60,21 +60,11 @@ FileBin.prototype.write = function (fileName, data) {
   });
 };
 
-FileBin.prototype.copy = function (sourceFile, copyFile) {
-  return new RSVP.Promise((resolve, reject) => {
-    this.find(sourceFile).then(source => {
-      this.write(copyFile, source.content).then(copy => {
-        resolve(copy);
-      }).catch(reject);
-    }).catch(reject);
-  });
-};
-
 FileBin.prototype.destroy = function (fileName) {
   return new RSVP.Promise((resolve, reject) => {
     fs.unlink(path.join(this.base, fileName), (error) => {
       if (error) { return reject(error); }
-      resolve(true);
+      resolve( { id: fileName } );
     });
   });
 };
