@@ -62,3 +62,21 @@ fileBin.all().then(files => console.log(files));
 fileBin.write('CONTRIBUTORS.md', 'Pull requests accepted')
        .then(file => console.log(file));
 ```
+
+### Renaming a file
+
+`#rename` takes two arguments `oldFileName` and `newFileName`. It will rename the old file to the specified new file name and return the file object via a promise.
+
+```js
+fileBin.rename('old-name.md', 'new-name.md')
+       .then((file, oldFileName, newFileName) => console.log(`${oldFileName} was successfully renamed to ${newFileName}.`)
+```
+
+### Destroying a file
+
+`#destroy` takes a single argument of the `fileName` that you want to delete. It will delete the specified file and return true via a promise.
+
+```js
+fileBin.destroy('filename.md')
+  .then(console.log(`true`))
+```
