@@ -83,11 +83,11 @@ fileBin.rename('old-name.md', 'new-name.md')
 
 ### Destroying a file
 
-`#destroy` takes a single argument of the `fileName` that you want to delete. It will delete the specified file and return true via a promise.
+`#destroy` takes a single argument of the `fileName` that you want to delete. It will delete the specified file and return the `fileName` via a promise.
 
 ```js
 fileBin.destroy('filename.md')
-  .then(console.log(`true`))
+  .then(console.log(`filename.md`))
 ```
 
 ### Copying a File
