@@ -79,7 +79,7 @@ FileBin.prototype.rename = function (oldFileName, newFileName) {
         return resolve(file, newFullPath, oldFullPath);
       });
     });
-  })
+  });
 };
 
 FileBin.prototype.copy = function (sourceFile, copyFile) {
@@ -102,9 +102,9 @@ FileBin.prototype.getBaseDirectory = function() {
 
 FileBin.prototype.setBaseDirectory = function (directoryName) {
   if (!directoryName){ throw new Error('Directory name can\'t be blank.'); }
-  this.base = directoryName
+  this.base = directoryName;
 
-  return this
+  return this;
 };
 
 function filterInvalidExtensions(instance, files) {
@@ -119,7 +119,7 @@ function formatFile(fileName, content, stats) {
   var statistics = {
     id: fileName,
     content: content.toString()
-  }
+  };
 
   if (stats instanceof fs.Stats) {
     statistics.lastModified =  new Date(stats.mtime);
@@ -128,6 +128,6 @@ function formatFile(fileName, content, stats) {
   }
 
   return statistics;
-};
+}
 
 module.exports = FileBin;

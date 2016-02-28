@@ -45,7 +45,7 @@ describe('fileBin - Instance', () => {
         'subdirectory': {}
       }
     });
-  })
+  });
 
   afterEach(() => {
     mock.restore();
@@ -259,7 +259,7 @@ describe('fileBin - Instance', () => {
     });
 
     it('should return the base directory', () => {
-      assert.equal('/some/directory', this.instance.getBaseDirectory())
+      assert.equal('/some/directory', this.instance.getBaseDirectory());
     });
   });
 
@@ -332,7 +332,7 @@ describe('fileBin - Instance', () => {
      });
 
      it('should return the base directory', () => {
-       assert.equal('/some/directory', this.instance.getBaseDirectory())
+       assert.equal('/some/directory', this.instance.getBaseDirectory());
      });
    });
 
@@ -342,9 +342,9 @@ describe('fileBin - Instance', () => {
      });
 
      it('should set the Base Directory', () => {
-       assert.equal(this.instance.base, '/some/directory')
-       this.instance.setBaseDirectory('/new/directory')
-       assert.equal(this.instance.base, '/new/directory')
+       assert.equal(this.instance.base, '/some/directory');
+       this.instance.setBaseDirectory('/new/directory');
+       assert.equal(this.instance.base, '/new/directory');
      });
    });
 
