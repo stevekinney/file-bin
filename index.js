@@ -6,6 +6,8 @@ const async = require('async');
 const RSVP = require('rsvp');
 
 const filterOutDirectories = require('./lib/filter-out-directories');
+const formatFile = require('./lib/format-file');
+const filterInvalidExtensions = require('./lib/filter-invalid-extensions');
 
 function FileBin(baseDirectory, validExtensions) {
   if (!(this instanceof FileBin)) {
@@ -106,28 +108,5 @@ FileBin.prototype.setBaseDirectory = function (directoryName) {
 
   return this;
 };
-
-function filterInvalidExtensions(instance, files) {
-  if (!instance.validExtensions.length) { return files; }
-  return files.filter(file => {
-    return instance.validExtensions.indexOf(path.extname(file)) !== -1;
-  });
-}
-
-
-function formatFile(fileName, content, stats) {
-  var statistics = {
-    id: fileName,
-    content: content.toString()
-  };
-
-  if (stats instanceof fs.Stats) {
-    statistics.lastModified =  new Date(stats.mtime);
-    statistics.birthTime = new Date(stats.birthtime);
-    statistics.lastAccessed =  new Date(stats.atime);
-  }
-
-  return statistics;
-}
 
 module.exports = FileBin;
