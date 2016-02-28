@@ -98,10 +98,6 @@ FileBin.prototype.getBaseDirectory = function() {
   return this.base;
 };
 
-FileBin.prototype.getBaseDirectory = function() {
-  return this.base;
-};
-
 FileBin.prototype.setBaseDirectory = function (directoryName) {
   if (!directoryName){ throw new Error('Directory name can\'t be blank.'); }
   this.base = directoryName;
