@@ -1,6 +1,6 @@
 {
   "name": "file-bin",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "An abstraction for accessing the filesystem in Node.js.",
   "main": "index.js",
   "scripts": {
