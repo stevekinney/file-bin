@@ -1,6 +1,7 @@
 const assert = require('chai').assert;
 const FileBin = require('../index');
 const mock = require('mock-fs');
+const EventEmitter = require('events').EventEmitter;
 
 describe('FileBin - Class', () => {
 
@@ -345,6 +346,19 @@ describe('fileBin - Instance', () => {
        assert.equal(this.instance.base, '/some/directory');
        this.instance.setBaseDirectory('/new/directory');
        assert.equal(this.instance.base, '/new/directory');
+     });
+
+     it('should emit an event', (done) => {
+       var oldBaseDirectory = this.instance.getBaseDirectory();
+       var newBaseDirectory = '/some/directory/subdirectory';
+
+       this.instance.on('base-directory-changed', (newDir, oldDir) => {
+         assert.equal(oldDir, oldBaseDirectory);
+         assert.equal(newDir, newBaseDirectory);
+         done();
+       });
+
+       this.instance.setBaseDirectory(newBaseDirectory);
      });
    });
 
