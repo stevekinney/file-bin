@@ -1,5 +1,8 @@
 'use strict';
 
+const EventEmitter = require('events');
+const util = require('util');
+
 const fs = require('fs');
 const path = require('path');
 const async = require('async');
@@ -14,9 +17,14 @@ function FileBin(baseDirectory, validExtensions) {
     throw new Error('Must be instantiated with the "new" keyword.');
   }
 
+  EventEmitter.call(this);
+
   this.base = baseDirectory || __dirname;
   this.validExtensions = validExtensions || [];
+
 }
+
+util.inherits(FileBin, EventEmitter);
 
 FileBin.prototype.find = function (fileName) {
   var fullPath = path.join(this.base, fileName);
@@ -100,7 +108,11 @@ FileBin.prototype.getBaseDirectory = function() {
 
 FileBin.prototype.setBaseDirectory = function (directoryName) {
   if (!directoryName){ throw new Error('Directory name can\'t be blank.'); }
+
+  let oldDirectoryName = this.getBaseDirectory();
+
   this.base = directoryName;
+  this.emit('base-directory-changed', this.base, oldDirectoryName)
 
   return this;
 };
