@@ -105,6 +105,8 @@ fileBin.copy('orignal.md', 'original-copy.md')
 
 `#setBaseDirectory('/new/base')` takes in a directory as an argument and will update the FileBin's base directory to the given directory.
 
+`#setBaseDirectory` will emit an event that contains the oldDirectory and the newDirectory.
+
 ```js
 var fileBin = new FileBin('/some/directory')
 
