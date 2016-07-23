@@ -11,6 +11,8 @@ const filterOutDirectories = require('./lib/filter-out-directories');
 const formatFile = require('./lib/format-file');
 const filterInvalidExtensions = require('./lib/filter-invalid-extensions');
 
+if (!Promise) { Promise = require('rsvp').Promise; }
+
 function FileBin(baseDirectory, validExtensions) {
   if (!(this instanceof FileBin)) {
     throw new Error('Must be instantiated with the "new" keyword.');
